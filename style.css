@@ -15,18 +15,18 @@ body {
 	color:white;
   font-size: 13px;
 	/*font-family: 'Press Start 2P',Helvetica, Arial;*/
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Press Start 2P', Helvetica, Arial;
   background: url(http://1.bp.blogspot.com/-9IyUo4PfZbc/U2lgMlsBY6I/AAAAAAAAQJo/Upyo1mGPMdk/s1600/laskyline-3-X3.jpg),url(http://www.housesellerla.com/agent_files/_downtown_LA.jpg) black;
 }
 h3 {
 	text-align: center;
 	font-weight: bold;
 	font-size: 30px;
-  font-family:'Press Start 2P';
+  font-family:'Press Start 2P',Helvetica, Arial;
 }
 
 #dest-text{
-  font-size: 20px;
+  font-size: 15px;
   font-family: 'Press Start 2P',Helvetica, Arial;
 }
 #input {
@@ -39,4 +39,36 @@ h3 {
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
+  text-align: justify;
+}
+.logo-img{
+  margin: 10px;
+  width:30px;
+	height:30px;
+}
+
+#navbar{
+  text-align: justify;
+  font-size:10px;
+  color: blue;
+}
+#copy-right{
+  text-align: right;
+  margin: 10px;
+}
+
+.search-button{
+  background-color: #4CAF50; /* Green */
+     border: none;
+     color: white;
+     padding: 10px 30px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 15px;
+}
+
+.text-box {
+    width: 300px;
+    height: 30px
 }

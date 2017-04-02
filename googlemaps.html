@@ -6,24 +6,40 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 </style>
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+	@import url('https://fonts.googleapis.com/css?family=Lato');
 </style>
   <script type="text/javascript" src="map.js"></script>
   </head>
+
+  <!--adds social media page-->
+  <div id="navbar">
+    <nav>
+      <a href="https://www.facebook.com/Better-Safe-Than-Sorry-198575203973273/"> <img class="logo-img" src="https://www.facebook.com/images/fb_icon_325x325.png"></a>
+      <a href="https://github.com/Astriddddzx/LA-HACKS"> <img class="logo-img" src="https://github.com/fluidicon.png"></a>
+    </nav>
+  </div>
   <body>
 
+  <h3>BETTER SAFE THAN SORRY</h3>
+ 	<div id="infop">
+ 		<p> Do you have no idea where you are?
+       Are you visiting Los Angeles and don't want your trip to get spoiled by a rather unfortunate event?
+       BetterSafeThanSorry suggests an optimal route depending on both the distance and the safety of a certain neighborhood.
+       Enter your destination and let us help you to arrive at your home, your hotel, or anywhere you want safely!
+       <br><br>
+       ~~ For optimal results, please zoom in. The shift in color of the heatmap from green to red shows an increase in danger ~~
 
-    <h3>BETTER SAFE THAN SORRY</h3>
-	<div id="infop">
-		<p> Do you have no idea where you are? Are you visiting Los Angeles and don't want your trip to get spoiled by a rather unfortunate event? BetterSafeThanSorry gives you an optimal route depending on both the distance and the safety of a certain neighborhood. Just enter your starting and ending location to arrive your home or your hotel safely! </p>
-	</div>
+     </p>
+
+
+   </div>
 
 
   <div id="input" >
     <div id = "dest-text"><body><h2 > Enter Your destination:</h2></body></div>
-		<input id="end-loc" type="text" placeholder="Input End Location">
-		<button id = "inputbutton">Done</button>
 
+    <input id="end-loc" type="text" class = "text-box" placeholder="Input End Location">
+		<button class="search-button" id = "inputbutton">Go!</button>
 	</div>
     <div id="map"></div>
 
@@ -31,10 +47,12 @@
     <div id="map-canvas"></div>
 
 
-
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-uLQDCHU4jPcmjNHmWWRF3Zdomi86hLA&libraries=places,visualization&callback=initMain" async defer></script>
 
-   <script src="lib/soda-js/lib/soda-js.bundle.js"></script>    
-    
+   <script src="lib/soda-js/lib/soda-js.bundle.js"></script>
+
   </body>
+  <footer id ="copy-right">
+    <p> Better Safe Than Sorry &copy 2017</p>
+  </footer>
 </html>
