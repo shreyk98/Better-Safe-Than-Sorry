@@ -328,13 +328,18 @@ function initMap() {
 
             //var heatRad = 0.7240504388*(zoomLevel*zoomLevel)  - 8.322539931*(zoomLevel) + 11.19798978;
             var heatRad = HEAT_RADIUS;
-            if(zoomLevel < 14){
+            if(zoomLevel < 15){
               heatmap.setMap(null);
               heatmap_toggle = false;
               console.log('deleting heatmap');
             } else {
+              if(zoomLevel <= 15){
+                heatmap.set('radius', 60);
+              } else {
+                heatmap.set('radius', heatRad);
+              }
               heatmap.setMap(map);
-              heatmap_toggle = true;
+              heatmap_toggle = true;       
             }
 
             heatmap.set('radius', heatRad);
@@ -427,9 +432,13 @@ function initDirectionsMap() {
         heatmap_toggle = false;
         console.log('deleting heatmap');
       } else {
+        if(zoomLevel <= 15){
+          heatmap.set('radius', 60);
+        } else {
+          heatmap.set('radius', heatRad);
+        }
         heatmap.setMap(map);
-        heatmap_toggle = true;
-        heatmap.set('radius', heatRad);
+        heatmap_toggle = true;       
       }
  
       
