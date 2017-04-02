@@ -261,6 +261,37 @@ function distance(lat1, lon1, lat2, lon2) {
   return earthRadiusKm * c;
 }
 
+function getStartingLoc(){
+  //Default starting loc
+  var ucla = {
+        lat: 34.0689,
+        lng: -118.4452
+  };
+
+  var pos;
+  if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+        console.log("Location found!");
+  } else {
+    pos = ucla;
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+
+  //FOR TESTING ONLY
+  if(FORCED_LOC_UCLA){
+    pos = ucla;
+  }
+
+  return pos;
+}
+
 function initMap() {
     var ucla = {
         lat: 34.0689,
@@ -274,22 +305,10 @@ function initMap() {
         map: map
     });
 
-    var pos = ucla;
+    var pos = getStartingLoc();
     // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
 
-            //FOR TESTING ONLY
-            if(FORCED_LOC_UCLA){
-              pos = ucla;
-            }
-
-            start = pos;
-
+    $.when(pos).done(function() {
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
@@ -328,17 +347,8 @@ function initMap() {
             var currentCenter = {lat: map.getCenter().lat(), lng: map.getCenter().lng()};
             getData('data.lacity.org', 'y9pe-qdrd', currentCenter);                         
           });
-
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-        console.log("Location found!");
-
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
+    });
+        
 }
 
 
