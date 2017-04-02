@@ -192,9 +192,10 @@ function getData(address, dataset, pos){
             });
             */
             
-            if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < RENDER_RADIUS){
+            //if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < RENDER_RADIUS){
+            if(isInViewPort(datumPos)){
               //if(!(key in heatmap_set)){
-                heatmap_set[key] = true;
+                //heatmap_set[key] = true;
                 heatmapData.push(new google.maps.LatLng(datumPos.lat, datumPos.lng));
               //}
             }
@@ -234,6 +235,11 @@ function getClosestArea(pos) {
   }
 
   return areaNum;
+}
+
+function isInViewPort(pos) {
+  var loc = new google.maps.LatLng(pos.lat, pos.lng);
+  return map.getBounds().contains(loc);
 }
 
 function degreesToRadians(degrees) {
