@@ -1,9 +1,19 @@
 var map;
-/*
+var heatmap;
+
 const GRADIENT = [
-  ''
+  'rgba(188, 224, 96, 0)',
+  'rgba(188, 224, 96, 0.2)',
+  'rgba(194, 224, 96, 0.5)',
+  //'rgba(205, 213, 51, 0.8)',
+  'rgba(213, 191, 51, 0.9)',
+  'rgba(241, 181, 28, 0.9)',
+  'rgba(241, 142, 28, 0.9)',
+  'rgba(241, 53, 28, 0.9)'
 ];
-*/
+
+const HEAT_RADIUS = 70;
+
 const FORCED_LOC_UCLA = true;
 const NUM_AREAS = 21;
 const areas = [
@@ -161,7 +171,7 @@ function getData(address, dataset, pos){
           });
           */
           
-          if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < 1){
+          if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < 2){
             heatmapData.push(new google.maps.LatLng(datumPos.lat, datumPos.lng));
           }
           
@@ -170,10 +180,10 @@ function getData(address, dataset, pos){
         
         console.log(heatmapData);
         console.log(google.maps);
-        var heatmap = new google.maps.visualization.HeatmapLayer({
+        heatmap = new google.maps.visualization.HeatmapLayer({
             data: heatmapData,
-            radius: 50
-            
+            radius: HEAT_RADIUS,
+            gradient: GRADIENT
         });
 
         heatmap.setMap(map);
@@ -241,7 +251,7 @@ function initMap() {
       //DELETE PLZ
       //var usc = {lat: 34.0223519, lng: -118.287311};
       //pos = usc;
-      pos = {lat: 34.017949, lng: -118.298532};
+      //pos = {lat: 34.017949, lng: -118.298532};
 
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
@@ -253,6 +263,25 @@ function initMap() {
       });
 
       getData('data.lacity.org', 'y9pe-qdrd', pos);
+
+      map.addListener('zoom_changed', function() {        
+        zoomLevel = map.getZoom();
+        console.log('zoom level: ' + zoomLevel);
+        
+        if(zoomLevel <= 12 && zoomLevel > 8){
+          heatmap.set('radius', 10);
+        } else if(zoomLevel <= 14 && zoomLevel > 12){
+          heatmap.set('radius', 40);
+        } else if(zoomLevel < 8){
+          heatmap.set('radius', 3);
+        } else if(zoomLevel <= 16 && zoomLevel > 12){
+          heatmap.set('radius', 70);
+        } else if(zoomLevel > 16){
+          heatmap.set('radius', 100);
+        }
+        
+        
+      });
 
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
