@@ -1,0 +1,42 @@
+#map {
+        width: 80%;
+        height: 80%;
+        background-color: grey;
+		margin: 0 auto 0 auto;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+	  }
+body {
+	background-color:#0FC374;
+	color:white;
+  font-size: 13px;
+	/*font-family: 'Press Start 2P',Helvetica, Arial;*/
+  font-family: 'Raleway', sans-serif;
+  background: url(http://1.bp.blogspot.com/-9IyUo4PfZbc/U2lgMlsBY6I/AAAAAAAAQJo/Upyo1mGPMdk/s1600/laskyline-3-X3.jpg),url(http://www.housesellerla.com/agent_files/_downtown_LA.jpg) black;
+}
+h3 {
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+  font-family:'Press Start 2P';
+}
+
+#dest-text{
+  font-size: 20px;
+  font-family: 'Press Start 2P',Helvetica, Arial;
+}
+#input {
+	text-align: center;
+	padding: 30px;
+}
+#infop {
+	padding: 30 px;
+	color: white;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
