@@ -170,32 +170,34 @@ function getData(address, dataset, pos){
         for (var datum of rows){
 
           //Formats string
-          var loc = datum.location_1;
-          loc = loc.substring(1, loc.length-2);
-          var longLat = loc.split(',');
-          longLat[1] = longLat[1].substring(1);
+          if(datum.location_1 != null){
+            var loc = datum.location_1;
+            loc = loc.substring(1, loc.length-2);
+            var longLat = loc.split(',');
+            longLat[1] = longLat[1].substring(1);
 
 
-          var datumPos = {
-            lat: Number(longLat[0]),
-            lng: Number(longLat[1])
-          }
+            var datumPos = {
+              lat: Number(longLat[0]),
+              lng: Number(longLat[1])
+            }
 
-          var key = longLat[0]+longLat[1];
+            var key = longLat[0]+longLat[1];
 
-          /*
-          //Add marker at pos
-          var loc = new google.maps.Marker({
-            position: datumPos,
-            map: map
-          });
-          */
-          
-          if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < RENDER_RADIUS){
-            //if(!(key in heatmap_set)){
-              heatmap_set[key] = true;
-              heatmapData.push(new google.maps.LatLng(datumPos.lat, datumPos.lng));
-            //}
+            /*
+            //Add marker at pos
+            var loc = new google.maps.Marker({
+              position: datumPos,
+              map: map
+            });
+            */
+            
+            if(distance(pos.lat, pos.lng, datumPos.lat, datumPos.lng) < RENDER_RADIUS){
+              //if(!(key in heatmap_set)){
+                heatmap_set[key] = true;
+                heatmapData.push(new google.maps.LatLng(datumPos.lat, datumPos.lng));
+              //}
+            }
           }
           
         }
