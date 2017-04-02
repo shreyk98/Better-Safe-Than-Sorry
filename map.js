@@ -306,7 +306,8 @@ function initMap() {
     });
 
     var pos = getStartingLoc();
-    // Try HTML5 geolocation.
+    
+    start = pos;
 
     $.when(pos).done(function() {
             infoWindow.setPosition(pos);
