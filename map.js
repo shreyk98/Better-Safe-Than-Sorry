@@ -159,6 +159,7 @@ function getData(address, dataset, pos){
     delete heatmap;
   } 
 
+  
   if(heatmap_toggle){
   consumer.query()
     .withDataset(dataset)    
@@ -204,15 +205,9 @@ function getData(address, dataset, pos){
         }
 
         
-        console.log(heatmapData);
-        console.log(google.maps);
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: heatmapData,
-            radius: HEAT_RADIUS,
-            gradient: GRADIENT
-        });
-
-        heatmap.setMap(map);
+        //console.log(heatmapData);
+        //console.log(google.maps);
+        displayHeatmap(heatmapData);
         
       })
       .on('error', function(error) { console.error(error);});
@@ -222,6 +217,18 @@ function getData(address, dataset, pos){
       delete datum;
     }
     //delete heatmapData;
+}
+
+function displayHeatmap(heatmapData){
+  if(heatmap_toggle){
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatmapData,
+      radius: HEAT_RADIUS,
+      gradient: GRADIENT
+    });
+
+    heatmap.setMap(map);
+  }
 }
 
 function getClosestArea(pos) {
