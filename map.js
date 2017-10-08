@@ -139,8 +139,14 @@ const areas = [
 ];
 
 function getData(address, dataset, pos){
+  
   console.log('Getting data');
+  console.log("here" + pos.lat + pos.lng);
 
+  map.setCenter(pos);
+
+
+  console.log(map.getBounds())
   var consumer = new soda.Consumer(address);
 
   var incident_location;
@@ -161,32 +167,29 @@ function getData(address, dataset, pos){
 
   
   if(heatmap_toggle){
-  consumer.query()
-    .withDataset(dataset)    
-    .where({area: areaNum})
-    .getRows()
-      .on('success', function(rows) { 
-        console.log(rows);
+      $(pos).ready(function(){
+        var request = "https://data.lacity.org/resource/7fvc-faax.json?$where=within_circle(location_1, " + pos.lat + ", " + pos.lng + ", 2000)"
+        console.log(request)
+        $.get(request, function(rows){
+          console.log(rows)
 
-        for (var datum of rows){
+          for (var datum of rows){
 
-          //Formats string
+          
           if(datum.location_1 != null){
-            var loc = datum.location_1;
-            loc = loc.substring(1, loc.length-2);
-            var longLat = loc.split(',');
-            longLat[1] = longLat[1].substring(1);
-
-
+                   
             var datumPos = {
-              lat: Number(longLat[0]),
-              lng: Number(longLat[1])
+              lat: parseFloat(datum.location_1.coordinates[1]),
+              lng: parseFloat(datum.location_1.coordinates[0])
             }
+            
 
-            var key = longLat[0]+longLat[1];
-
-            /*
+            //var key = longLat[0]+longLat[1];
+            //console.log(datum.location_1.coordinates[0])
+            console.log(datumPos)
+            
             //Add marker at pos
+            /*
             var loc = new google.maps.Marker({
               position: datumPos,
               map: map
@@ -200,22 +203,25 @@ function getData(address, dataset, pos){
                 heatmapData.push(new google.maps.LatLng(datumPos.lat, datumPos.lng));
               //}
             }
+            
+            
           }
           
         }
 
-        
-        //console.log(heatmapData);
-        //console.log(google.maps);
-        displayHeatmap(heatmapData);
-        
+        displayHeatmap(heatmapData)
+
+        })
+
+
       })
-      .on('error', function(error) { console.error(error);});
-    }
-    delete consumer;
-    for(var datum in heatmapData){
-      delete datum;
-    }
+      
+  }
+
+  delete consumer;
+  for(var datum in heatmapData){
+    delete datum;
+  }
     //delete heatmapData;
 }
 
@@ -295,7 +301,8 @@ function getStartingLoc(){
   if(FORCED_LOC_UCLA){
     pos = ucla;
   }
-
+  console.log(pos.lat)
+  console.log(pos.lng)
   return pos;
 }
 
@@ -317,16 +324,18 @@ function initMap() {
     start = pos;
 
     $.when(pos).done(function() {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            map.setCenter(pos);
+            
             var loc = new google.maps.Marker({ //I think this location thing gives us our current location so we need this  as our starting coordinate
             // start = new google.maps.Marker({
                 position: pos,
                 map: map
             });
+            
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            map.setCenter(pos);
 
-            getData('data.lacity.org', 'y9pe-qdrd', pos);
+            getData('data.lacity.org', '7fvc-faax', pos);
 
           //Adjusts heat radius based on zoom level
           map.addListener('zoom_changed', function() {        
@@ -358,7 +367,7 @@ function initMap() {
            map.addListener('idle', function() {
             console.log(map.getCenter().lat() + ' ' + map.getCenter().lng());
             var currentCenter = {lat: map.getCenter().lat(), lng: map.getCenter().lng()};
-            getData('data.lacity.org', 'y9pe-qdrd', currentCenter);                         
+            getData('data.lacity.org', '7fvc-faax', currentCenter);                         
           });
     });
         
@@ -455,7 +464,7 @@ function initDirectionsMap() {
      map.addListener('idle', function() {
       console.log(map.getCenter().lat() + ' ' + map.getCenter().lng());
       var currentCenter = {lat: map.getCenter().lat(), lng: map.getCenter().lng()};
-      getData('data.lacity.org', 'y9pe-qdrd', currentCenter);                         
+      getData('data.lacity.org', '7fvc-faax', currentCenter);                         
     });
          //map = new google.maps.Map(document.getElementById('map'), myOptions, alternates = true),
         //  if (map ==null){
@@ -527,7 +536,7 @@ function getDangerLevel(route){
     var areaNum = getClosestArea(coord);
 
     consumer.query()
-    .withDataset('y9pe-qdrd')    
+    .withDataset('7fvc-faax')    
     .where({area: areaNum})
     .getRows()
       .on('success', function(rows) { 
